@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  SampleAdBlocker
-//
-//  Created by maximtop on 12.06.2021.
-//
-
 import Cocoa
 import SafariServices.SFSafariApplication
 import SafariServices.SFSafariExtensionManager
