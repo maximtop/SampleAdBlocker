@@ -1,5 +1,4 @@
-# SimpleAdBlocker
-
+# SampleAdBlocker
 ## What I have learned building simple content blocker with dynamic rules list and web extension for macOS
 
 - To log url with NSLog better use `.path` method instead of `.absoluteString` or `.absoluteURL`, otherwise log won't print the whole path after space
