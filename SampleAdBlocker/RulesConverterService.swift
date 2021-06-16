@@ -36,7 +36,7 @@ class RulesConverterService {
 
         let fileURL = dir!.appendingPathComponent(fileName)
 
-        NSLog("Path to the content blocker: \(fileURL.absoluteString)")
+        NSLog("Path to the content blocker: \(fileURL.path)")
         do {
             try rules.write(to: fileURL)
         } catch let error {

@@ -1,3 +1,1 @@
 example.org##h1
-||example.org^
-||meduza.io^

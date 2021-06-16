@@ -41,4 +41,10 @@ class ViewController: NSViewController {
         }
     }
 
+    @IBAction func reloadContentBlocker(_ sender: Any) {
+        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.maximtop.SampleAdBlocker.ContentBlockerNew", completionHandler: { (error) in
+            NSLog("Has error?: \(String(describing: error))")
+            NSLog("Finished reloading the content blocker")
+        })
+    }
 }

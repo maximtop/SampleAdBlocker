@@ -9,7 +9,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // reload SampleAdBlocker extension
         NSLog("Start reloading of the content blocker")
-        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.maximtop.SampleAdBlocker.ContentBlocker", completionHandler: { _ in
+        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.maximtop.SampleAdBlocker.ContentBlocker", completionHandler: { (error) in
+            if (error != nil) {
+                NSLog("Content blocker error: \(String(describing: error))")
+            }
             NSLog("Finished reloading the content blocker")
         })
 
