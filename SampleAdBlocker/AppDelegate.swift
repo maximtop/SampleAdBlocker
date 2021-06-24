@@ -8,21 +8,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         RulesConverterService.applyConverter();
 
         // reload SampleAdBlocker extension
-        NSLog("Start reloading of the content blocker")
+        NSLog("Start reloading the CONTENT BLOCKER")
+        let start = DispatchTime.now()
         SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.maximtop.SampleAdBlocker.ContentBlocker", completionHandler: { (error) in
             if (error != nil) {
-                NSLog("Content blocker error: \(String(describing: error))")
+                NSLog("CONTENT BLOCKER error: \(String(describing: error))")
             }
-            NSLog("Finished reloading the content blocker")
+            NSLog("Finished reloading the CONTENT BLOCKER")
+            let end = DispatchTime.now()
+            let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+            let timeInterval = Double(nanoTime) / 1_000_000_000
+            NSLog("CONTENT BLOCKER reload time: \(timeInterval)")
         })
 
         SFContentBlockerManager.getStateOfContentBlocker(withIdentifier: "com.maximtop.SampleAdBlocker.ContentBlocker", completionHandler: { (state, error) in
             if let error = error {
-                NSLog("Content blocker error: \(error)")
+                NSLog("CONTENT BLOCKER error: \(error)")
             }
             if let state = state {
                 let contentBlockerIsEnabled = state.isEnabled
-                NSLog("Content blocker state: \(contentBlockerIsEnabled ? "Enabled" : "Disabled")")
+                NSLog("CONTENT BLOCKER state: \(contentBlockerIsEnabled ? "Enabled" : "Disabled")")
             }
         })
     }

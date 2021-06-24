@@ -3,12 +3,11 @@ import Foundation
 class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
 
     func beginRequest(with context: NSExtensionContext) {
-
         let documentFolder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SampleAdBlocker")
 
         let jsonURL = documentFolder!.appendingPathComponent(Constants.blockerListFilename)
 
-        NSLog("Content blocker path \(jsonURL.path)")
+        NSLog("CONTENT BLOCKER path \(jsonURL.path)")
 
         let attachment = NSItemProvider(contentsOf: jsonURL)!
 
@@ -17,5 +16,4 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
 
         context.completeRequest(returningItems: [item], completionHandler: nil)
     }
-
 }

@@ -1,0 +1,2 @@
+TODO
+- [x] add linter

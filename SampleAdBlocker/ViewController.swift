@@ -42,9 +42,18 @@ class ViewController: NSViewController {
     }
 
     @IBAction func reloadContentBlocker(_ sender: Any) {
-        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.maximtop.SampleAdBlocker.ContentBlockerNew", completionHandler: { (error) in
-            NSLog("Has error?: \(String(describing: error))")
-            NSLog("Finished reloading the content blocker")
+        // reload SampleAdBlocker extension
+        NSLog("Start reloading the CONTENT BLOCKER")
+        let start = DispatchTime.now()
+        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.maximtop.SampleAdBlocker.ContentBlocker", completionHandler: { (error) in
+            if (error != nil) {
+                NSLog("CONTENT BLOCKER error: \(String(describing: error))")
+            }
+            NSLog("Finished reloading the CONTENT BLOCKER")
+            let end = DispatchTime.now()
+            let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+            let timeInterval = Double(nanoTime) / 1_000_000_000
+            NSLog("CONTENT BLOCKER reload time: \(timeInterval)")
         })
     }
 }
