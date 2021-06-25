@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.6",
-    "webextension-polyfill-ts": "^0.25.0"
+    "webextension-polyfill-ts": "^0.25.0",
+    "scriptlets": "https://github.com/AdguardTeam/Scriptlets",
+    "extended-css": "https://github.com/AdguardTeam/ExtendedCss"
   }
 }

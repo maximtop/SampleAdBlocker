@@ -2,25 +2,31 @@
 import { browser } from 'webextension-polyfill-ts';
 import { Messages } from './common/constants';
 
+const getSelectorsAndScriptsFromNativeApp = async (url: string) => {
+    const response = await browser.runtime.sendNativeMessage(
+        'application-id',
+        {
+            type: Messages.GetSelectorsAndScripts,
+            data: { url },
+        },
+    );
+
+    const { data } = response;
+    return JSON.parse(data);
+};
+
 const main = async () => {
     browser.runtime.onMessage.addListener(async (message) => {
-        console.log('Received message: ', message);
         const { type, data } = message;
         switch (type) {
             case Messages.GetSelectorsAndScripts: {
-                console.log(data);
-                return {
-                    scripts: 'console.log(test)',
-                    selectors: 'h1 { display: none!important }',
-                };
+                const { url } = data;
+                return getSelectorsAndScriptsFromNativeApp(url);
             }
             default:
                 return true;
         }
     });
-
-    const response = await browser.runtime.sendNativeMessage('application-id', { message: 'Hello from background page' });
-    console.log('Received sendNativeMessage response:', response);
 };
 
 main();

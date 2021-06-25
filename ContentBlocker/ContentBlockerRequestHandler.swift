@@ -5,7 +5,7 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
     func beginRequest(with context: NSExtensionContext) {
         let documentFolder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SampleAdBlocker")
 
-        let jsonURL = documentFolder!.appendingPathComponent(Constants.blockerListFilename)
+        let jsonURL = documentFolder!.appendingPathComponent(Constants.simpleRulesBlockerFilename)
 
         NSLog("CONTENT BLOCKER path \(jsonURL.path)")
 
