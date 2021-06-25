@@ -1,2 +1,3 @@
 example.org##h1
 example.org#%#//scriptlet("set-constant", "adg", "true")
+example.org#$#p {background: pink}

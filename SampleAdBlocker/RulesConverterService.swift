@@ -21,7 +21,7 @@ class RulesConverterService {
     /**
      * Converts rules
      */
-    static func convertRules(rules: [String]) -> ConversionResult? {
+    static func convertRules(rules: [String]) -> ConversionResult {
         let result: ConversionResult? = ContentBlockerConverter().convertArray(rules: rules, advancedBlocking: true)
         NSLog("Converted: \(result!.converted)")
         NSLog("Advanced Blocking: \(result!.advancedBlocking ?? "Empty")")
@@ -39,7 +39,7 @@ class RulesConverterService {
         NSLog("Path to the content blocker: \(fileURL.path)")
         do {
             try rules.write(to: fileURL)
-        } catch let error {
+        } catch {
             print(error)
             NSLog("Error saving conversion result")
         }
@@ -48,7 +48,14 @@ class RulesConverterService {
     static func applyConverter() {
         let rulesList = getRules()!
 
-        let rulesData = convertRules(rules: rulesList)!.converted.data(using: .utf8)
-        saveConversionResult(rules: rulesData!, fileName: Constants.blockerListFilename)
+        let rules = convertRules(rules: rulesList)
+        
+        let rulesData = rules.converted.data(using: .utf8)
+        saveConversionResult(rules: rulesData!, fileName: Constants.simpleRulesBlockerFilename)
+
+        if let advancedBlocking = rules.advancedBlocking {
+            let advancedData = advancedBlocking.data(using: .utf8)
+            saveConversionResult(rules: advancedData!, fileName: Constants.advancedRulesBlockerFilename)
+        }
     }
 }
