@@ -26,14 +26,8 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
         NSLog("Received message from browser.runtime.sendNativeMessage: \(String(describing: message))")
 
-//        let response = NSExtensionItem()
-//        response.userInfo = [SFExtensionMessageKey: ["Response to": message]]
-//
-//        context.completeRequest(returningItems: [response], completionHandler: nil)
-
-
-        if (self.contentBlockerController == nil) {
-            self.contentBlockerController = ContentBlockerController.shared;
+        if (contentBlockerController == nil) {
+            contentBlockerController = ContentBlockerController.shared;
         }
 
         NSLog("AG: The extension received a message (%@)", message.type);
@@ -42,7 +36,7 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         if (message.type == "get_selectors_and_scripts") {
             do {
                 let url = message.data["url"] as! String
-                
+
                 NSLog("AG: Page url: %@", url);
 
                 let pageUrl = URL(string: url);
@@ -50,13 +44,13 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
                     return;
                 }
 
-                let data = try self.contentBlockerController!.getData(url: pageUrl!)
-                
+                let data = try contentBlockerController!.getData(url: pageUrl!)
+
                 let response = NSExtensionItem()
                 response.userInfo = [SFExtensionMessageKey: ["data": data]]
-        
+
                 context.completeRequest(returningItems: [response], completionHandler: nil)
-                
+
             } catch {
                 NSLog("AG: Error handling message (\(message.type)): \(error)");
             }

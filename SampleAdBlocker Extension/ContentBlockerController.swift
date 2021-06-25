@@ -1,9 +1,5 @@
 import Foundation
 
-// How it works:
-// Electron stores rules and filters data, but in case electron in not running permanently - we need to store rules data in shared resources file. For transfering between electron and this extension application we choose some "content-blocker"-like json format. Electron manages to create it and keep up-to-date with user changes. Here we listen for electron messages and download updated copy from shared resources.
-// This extension injects script to pages from there we handle messages requesting scripts and css to be applied to current page. These scripts and css are selected from saved local json data.
-
 class ContentBlockerController {
     // Singleton instance
     static let shared = ContentBlockerController();
