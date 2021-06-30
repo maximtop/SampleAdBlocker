@@ -6,17 +6,15 @@ let SFExtensionMessageKey = "message"
 
 struct ExtensionMessage {
     var type: String
-    var data: [String: Any]
+    var data: [String: Any]?
 
     init(message: [String: Any]) {
         type = message["type"] as! String
-        data = message["data"] as! [String: Any]
+        data = message["data"] as? [String : Any]
     }
 }
 
 class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
-    private var contentBlockerController: ContentBlockerController? = nil;
-
     // This method will be called when a background page calls browser.runtime.sendNativeMessage
     func beginRequest(with context: NSExtensionContext) {
         let item = context.inputItems[0] as! NSExtensionItem
@@ -24,33 +22,23 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
         let message = ExtensionMessage(message: rawMessage)
 
-        NSLog("Received message from browser.runtime.sendNativeMessage: \(String(describing: message))")
-
-        if (contentBlockerController == nil) {
-            contentBlockerController = ContentBlockerController.shared;
-        }
-
         NSLog("AG: The extension received a message (%@)", message.type);
 
         // Content script requests scripts and css for current page
-        if (message.type == "get_selectors_and_scripts") {
+        if (message.type == "get_rules") {
             do {
-                let url = message.data["url"] as! String
+                let documentFolder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SampleAdBlocker")
 
-                NSLog("AG: Page url: %@", url);
+                let jsonURL = documentFolder!.appendingPathComponent(Constants.advancedRulesBlockerFilename)
 
-                let pageUrl = URL(string: url);
-                if pageUrl == nil {
-                    return;
-                }
+                NSLog("Advanced rules path \(jsonURL.path)")
 
-                let data = try contentBlockerController!.getData(url: pageUrl!)
+                let text = try String(contentsOf: jsonURL, encoding: .utf8);
 
                 let response = NSExtensionItem()
-                response.userInfo = [SFExtensionMessageKey: ["data": data]]
+                response.userInfo = [SFExtensionMessageKey: ["data": text]]
 
                 context.completeRequest(returningItems: [response], completionHandler: nil)
-
             } catch {
                 NSLog("AG: Error handling message (\(message.type)): \(error)");
             }
