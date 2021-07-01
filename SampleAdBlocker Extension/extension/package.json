@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "ts-node tools/bundle",
-    "lint": "eslint . --ext .js,.ts"
+    "lint": "eslint . --ext .js,.ts",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
@@ -15,6 +16,7 @@
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-typescript": "^7.14.5",
     "@types/copy-webpack-plugin": "^8.0.0",
+    "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
     "babel-loader": "^8.2.2",
@@ -23,14 +25,16 @@
     "eslint": "^7.29.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.4",
+    "jest": "^27.0.6",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4",
     "webpack": "^5.40.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.14.6",
-    "webextension-polyfill-ts": "^0.25.0",
+    "extended-css": "https://github.com/AdguardTeam/ExtendedCss",
     "scriptlets": "https://github.com/AdguardTeam/Scriptlets",
-    "extended-css": "https://github.com/AdguardTeam/ExtendedCss"
+    "tldts": "^5.7.38",
+    "webextension-polyfill-ts": "^0.25.0"
   }
 }

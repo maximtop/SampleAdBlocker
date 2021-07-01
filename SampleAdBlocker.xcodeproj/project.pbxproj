@@ -9,11 +9,6 @@
 /* Begin PBXBuildFile section */
 		496E3629267BCABF00BA873D /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 496E3628267BCABF00BA873D /* ContentBlockerConverter */; };
 		496E362F267C8B5100BA873D /* base-filter.txt in Resources */ = {isa = PBXBuildFile; fileRef = 496E362E267C8B5100BA873D /* base-filter.txt */; };
-		497E810426859A3500D90ED7 /* ContentBlockerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD0333F7DA8A7B4DC7CC9A /* ContentBlockerController.swift */; };
-		497E810526859A3800D90ED7 /* ContentBlockerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD0B9EB7E66F8EFF1AB11F /* ContentBlockerContainer.swift */; };
-		497E810626859A3C00D90ED7 /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD05BD32BE6C6CD8E9378B /* NetworkEngine.swift */; };
-		497E810A2685C76200D90ED7 /* BlockerEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E81092685C76200D90ED7 /* BlockerEntry.swift */; };
-		497E810C2685C78300D90ED7 /* BlockerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E810B2685C78300D90ED7 /* BlockerData.swift */; };
 		497E810D2685D00800D90ED7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A2332674D04200C2788E /* Constants.swift */; };
 		49B2A1ED2674C9D700C2788E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A1EC2674C9D700C2788E /* AppDelegate.swift */; };
 		49B2A1F02674C9D800C2788E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B2A1EE2674C9D800C2788E /* Main.storyboard */; };
@@ -71,12 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		18DD0333F7DA8A7B4DC7CC9A /* ContentBlockerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerController.swift; sourceTree = "<group>"; };
-		18DD05BD32BE6C6CD8E9378B /* NetworkEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEngine.swift; sourceTree = "<group>"; };
-		18DD0B9EB7E66F8EFF1AB11F /* ContentBlockerContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerContainer.swift; sourceTree = "<group>"; };
 		496E362E267C8B5100BA873D /* base-filter.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "base-filter.txt"; sourceTree = "<group>"; };
-		497E81092685C76200D90ED7 /* BlockerEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerEntry.swift; sourceTree = "<group>"; };
-		497E810B2685C78300D90ED7 /* BlockerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerData.swift; sourceTree = "<group>"; };
 		49B2A1E82674C9D700C2788E /* SampleAdBlocker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleAdBlocker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B2A1EB2674C9D700C2788E /* SampleAdBlocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleAdBlocker.entitlements; sourceTree = "<group>"; };
 		49B2A1EC2674C9D700C2788E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,11 +175,6 @@
 				49B2A2152674C9DB00C2788E /* Info.plist */,
 				49B2A2162674C9DB00C2788E /* SampleAdBlocker_Extension.entitlements */,
 				49B2A2042674C9DB00C2788E /* Resources */,
-				18DD0333F7DA8A7B4DC7CC9A /* ContentBlockerController.swift */,
-				18DD0B9EB7E66F8EFF1AB11F /* ContentBlockerContainer.swift */,
-				18DD05BD32BE6C6CD8E9378B /* NetworkEngine.swift */,
-				497E81092685C76200D90ED7 /* BlockerEntry.swift */,
-				497E810B2685C78300D90ED7 /* BlockerData.swift */,
 			);
 			path = "SampleAdBlocker Extension";
 			sourceTree = "<group>";
@@ -381,13 +366,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				497E810426859A3500D90ED7 /* ContentBlockerController.swift in Sources */,
 				49B2A2032674C9DB00C2788E /* SafariWebExtensionHandler.swift in Sources */,
-				497E810A2685C76200D90ED7 /* BlockerEntry.swift in Sources */,
-				497E810626859A3C00D90ED7 /* NetworkEngine.swift in Sources */,
 				497E810D2685D00800D90ED7 /* Constants.swift in Sources */,
-				497E810C2685C78300D90ED7 /* BlockerData.swift in Sources */,
-				497E810526859A3800D90ED7 /* ContentBlockerContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

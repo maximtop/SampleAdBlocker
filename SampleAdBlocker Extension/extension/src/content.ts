@@ -3,7 +3,14 @@ import { browser } from 'webextension-polyfill-ts';
 import scriptlets from 'scriptlets';
 import ExtendedCss from 'extended-css';
 
-import { Messages } from './common/constants';
+import { Messages } from './pages/common/constants';
+
+interface SelectorsAndScripts {
+    scripts: string[],
+    cssInject: string[],
+    cssExtended: string[],
+    scriptlets: string[],
+}
 
 /**
  * Logs a message if verbose is true
@@ -17,13 +24,14 @@ const logMessage = (verbose: boolean, message: string) => {
     }
 };
 
-const getSelectorsAndScripts = async () => {
-    return browser.runtime.sendMessage({
-        type: Messages.GetSelectorsAndScripts,
+const getSelectorsAndScripts = async (): Promise<SelectorsAndScripts> => {
+    const response = await browser.runtime.sendMessage({
+        type: Messages.GetRules,
         data: {
             url: window.location.href,
         },
     });
+    return JSON.parse(response) as SelectorsAndScripts;
 };
 
 /**
@@ -124,9 +132,12 @@ const protectStyleElementContent = (protectStyleEl: Node) => {
  * @param verbose logging
  */
 const applyCss = (styleSelectors: string[], verbose: boolean) => {
+    console.log(styleSelectors);
     if (!styleSelectors || !styleSelectors.length) {
         return;
     }
+
+    console.log(styleSelectors);
 
     logMessage(verbose, `css length: ${styleSelectors.length}`);
 
@@ -135,6 +146,7 @@ const applyCss = (styleSelectors: string[], verbose: boolean) => {
     (document.head || document.documentElement).appendChild(styleElement);
 
     const selectors = styleSelectors.map((s) => s.trim());
+    console.log(selectors);
     selectors.forEach((selector) => {
         styleElement.sheet!.insertRule(selector);
     });
@@ -194,12 +206,6 @@ const applyScriptlets = (scriptletsData: string[], verbose: boolean) => {
     console.log(window.adg);
 };
 
-interface SelectorsAndScripts {
-    scripts: string[],
-    cssInject: string[],
-    cssExtended: string[],
-    scriptlets: string[],
-}
 /**
  * Applies injected script and css
  *
