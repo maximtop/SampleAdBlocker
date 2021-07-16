@@ -1,9 +1,8 @@
-import { browser } from 'webextension-polyfill-ts';
-
 import { log } from '../../common/log';
 import { ContentBlockerContainer } from './ContentBlockerContainer';
 import { BlockerData } from './BlockerData';
 import { Messages } from '../../common/constants';
+import { browser } from '../browser';
 
 export class ContentBlockerController {
     private contentBlockerContainer: ContentBlockerContainer;
@@ -13,19 +12,15 @@ export class ContentBlockerController {
     private initiated: boolean = false;
 
     constructor() {
-        log.debug('AG: AdvancedBlocking init ContentBlockerController');
-
         this.contentBlockerContainer = new ContentBlockerContainer();
         this.blockerDataCache = new Map();
-
-        this.setupJson();
     }
 
     /**
      * Downloads and sets up json from shared resources
      * @private
      */
-    private async initJson() {
+    private async getAndSetRulesFromNativeApp() {
         const response = await browser.runtime.sendNativeMessage(
             'application-id',
             {
@@ -36,18 +31,46 @@ export class ContentBlockerController {
     }
 
     /**
+     * Checks if rules are persisted in the storage
+     */
+    hasRulesInStorage() {
+        return this.contentBlockerContainer.hasRulesInStorage();
+    }
+
+    /**
+     * Recovers rules from storage
+     */
+    getAndSetRulesFromStorage() {
+        return this.contentBlockerContainer.getAndSetRulesFromStorage();
+    }
+
+    /**
      * Downloads and sets up json from shared resources
      */
-    async setupJson() {
+    async init() {
+        if (this.initiated) {
+            return;
+        }
+
+        log.debug('AG: AdvancedBlocking: init ContentBlockerController');
+
         // Drop cache
         this.blockerDataCache = new Map();
 
         try {
-            await this.initJson();
+            // checks if rules are in the storage
+            //  - if yes: get and set rules from storage
+            //  - if not: get and set rules from native app
+            const result = await this.hasRulesInStorage();
+            if (result) {
+                await this.getAndSetRulesFromStorage();
+            } else {
+                await this.getAndSetRulesFromNativeApp();
+            }
             this.initiated = true;
-            log.debug('AG: AdvancedBlocking: Json setup successfully.');
-        } catch (error) {
-            log.debug(`AG: AdvancedBlocking: Error setting json: ${error}`);
+            log.debug('AG: AdvancedBlocking: rules setup went successfully');
+        } catch (e) {
+            log.debug(`AG: AdvancedBlocking: Error setting rules: ${e}`);
         }
     }
 
@@ -61,11 +84,6 @@ export class ContentBlockerController {
      * @param url
      */
     getData(url: string): string {
-        if (!this.initiated) {
-            log.debug("Can't get data, because not initiated yet");
-            return '';
-        }
-
         const cacheKey = url;
         if (this.blockerDataCache.has(cacheKey)) {
             log.debug('AG: AdvancedBlocking: Return cached version');

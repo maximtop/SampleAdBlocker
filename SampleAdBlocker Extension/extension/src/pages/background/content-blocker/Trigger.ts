@@ -1,12 +1,13 @@
-import { CodingKey } from './CodingKey';
-
-export interface TriggerRaw {
-    [CodingKey.ifDomain]?: string[],
-    [CodingKey.urlFilter]?: string,
-    [CodingKey.unlessDomain]?: string[],
-    [CodingKey.shortcut]?: string,
+export interface RawTrigger {
+    ifDomain?: string[],
+    urlFilter?: string,
+    unlessDomain?: string[],
+    shortcut?: string,
 }
 
+/**
+ * Trigger class
+ */
 export class Trigger {
     ifDomain?: string[];
 
@@ -18,18 +19,18 @@ export class Trigger {
 
     regex?: RegExp;
 
-    constructor(trigger: TriggerRaw) {
-        if (trigger[CodingKey.ifDomain]) {
-            this.ifDomain = trigger[CodingKey.ifDomain];
+    constructor(trigger: RawTrigger) {
+        if (trigger.ifDomain) {
+            this.ifDomain = trigger.ifDomain;
         }
-        if (trigger[CodingKey.urlFilter]) {
-            this.urlFilter = trigger[CodingKey.urlFilter];
+        if (trigger.urlFilter) {
+            this.urlFilter = trigger.urlFilter;
         }
-        if (trigger[CodingKey.unlessDomain]) {
-            this.unlessDomain = trigger[CodingKey.unlessDomain];
+        if (trigger.unlessDomain) {
+            this.unlessDomain = trigger.unlessDomain;
         }
-        if (trigger[CodingKey.shortcut]) {
-            this.shortcut = trigger[CodingKey.shortcut];
+        if (trigger.shortcut) {
+            this.shortcut = trigger.shortcut;
         }
     }
 

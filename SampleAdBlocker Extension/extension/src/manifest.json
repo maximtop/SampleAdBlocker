@@ -15,17 +15,15 @@
     },
 
     "background": {
-        "scripts": [ "background.js" ]
+        "scripts": [ "background.js" ],
+        "persistent": false
     },
 
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
     "content_scripts": [{
         "js": [ "content.js" ],
-        "matches": [
-            "http://*/*",
-            "https://*/*"
-        ]
+        "matches": [ "http://example.org/*" ]
     }],
 
     "browser_action": {
@@ -39,7 +37,9 @@
     },
 
     "permissions": [
-        "<all_urls>",
-        "nativeMessaging"
+        "http://example.org/*",
+        "nativeMessaging",
+        "storage",
+        "unlimitedStorage"
     ]
 }

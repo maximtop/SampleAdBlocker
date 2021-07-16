@@ -4,7 +4,10 @@
 // 2. shortcut hash -> ruleIdx
 // 3. no shortcuts indexes list
 import { parse } from 'tldts';
+
 import { BlockerEntry } from './BlockerEntry';
+import { storage } from '../storage';
+import { lookupTableToObject, Objects, objectToLookupTable } from '../serializer';
 
 export class NetworkEngine {
     private shortcutLength = 5;
@@ -16,6 +19,8 @@ export class NetworkEngine {
     private shortcutsHistogram: Map<number, number>;
 
     private otherRules: number[];
+
+    LOOKUP_TABLES_STORAGE_KEY = 'lookup_tables';
 
     /**
      * Constructor
@@ -299,5 +304,38 @@ export class NetworkEngine {
 
         const len = str.length;
         return NetworkEngine.fastHashBetween(str, 0, len);
+    }
+
+    /**
+     * Retrieves lookup tables from the storage
+     */
+    async getAndSetRulesFromStorage() {
+        const result = await storage
+            .get(this.LOOKUP_TABLES_STORAGE_KEY) as { [key: string]: Objects };
+        const {
+            domainsLookupTable,
+            shortcutsLookupTable,
+            shortcutsHistogram,
+            otherRules,
+        } = result;
+
+        this.domainsLookupTable = objectToLookupTable(domainsLookupTable) as Map<number, number[]>;
+        // eslint-disable-next-line max-len
+        this.shortcutsLookupTable = objectToLookupTable(shortcutsLookupTable) as Map<number, number[]>;
+        this.shortcutsHistogram = objectToLookupTable(shortcutsHistogram) as Map<number, number>;
+        this.otherRules = otherRules as number[];
+    }
+
+    /**
+     * Saves lookup tables in the storage
+     * This values will be used on next background page reload
+     */
+    async persistLookupTables() {
+        await storage.set(this.LOOKUP_TABLES_STORAGE_KEY, {
+            domainsLookupTable: lookupTableToObject(this.domainsLookupTable),
+            shortcutsLookupTable: lookupTableToObject(this.shortcutsLookupTable),
+            shortcutsHistogram: lookupTableToObject(this.shortcutsHistogram),
+            otherRules: this.otherRules,
+        });
     }
 }

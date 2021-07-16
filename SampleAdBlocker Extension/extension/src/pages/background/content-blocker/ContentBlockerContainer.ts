@@ -1,11 +1,16 @@
 /* eslint-disable no-restricted-syntax */
 import { parse } from 'tldts';
+
 import { BlockerEntry } from './BlockerEntry';
 import { NetworkEngine } from './NetworkEngine';
 import { log } from '../../common/log';
 import { BlockerData } from './BlockerData';
 import { Action, ActionRaw } from './Action';
-import { Trigger, TriggerRaw } from './Trigger';
+import { Trigger, RawTrigger } from './Trigger';
+import { storage } from '../storage';
+import { NativeTrigger, RawNativeTrigger } from './NativeTrigger';
+
+type RawBlockerEntry = { action: ActionRaw, trigger: RawTrigger };
 
 /**
  * Storage and parser
@@ -15,10 +20,35 @@ export class ContentBlockerContainer {
 
     private networkEngine: NetworkEngine;
 
+    private BLOCKER_ENTRIES_STORAGE_KEY = 'blocker_entries';
+
     constructor() {
         this.blockerEntries = [];
         this.networkEngine = new NetworkEngine();
     }
+
+    private enrichBlockerEntries = (
+        blockerEntries: RawBlockerEntry[],
+        isNative: boolean = false,
+    ) => {
+        return blockerEntries
+            .map((entry: RawBlockerEntry) => {
+                const action = new Action(entry.action);
+                let trigger;
+                if (isNative) {
+                    trigger = new NativeTrigger(entry.trigger as RawNativeTrigger).toTrigger();
+                } else {
+                    trigger = new Trigger(entry.trigger);
+                }
+
+                trigger.setShortcut(ContentBlockerContainer.parseShortcut(trigger.urlFilter));
+
+                return {
+                    action,
+                    trigger,
+                };
+            });
+    };
 
     /**
      * Converts json script into BlockerEntry[] instance
@@ -26,18 +56,30 @@ export class ContentBlockerContainer {
      */
     private parseJsonString = (jsonString: string) => {
         const blockerEntries = JSON.parse(jsonString);
-        const enrichedBlockerEntries: BlockerEntry[] = blockerEntries
-            .map((entry: { action: ActionRaw, trigger: TriggerRaw }) => {
-                const action = new Action(entry.action);
-                const trigger = new Trigger(entry.trigger);
-
-                return {
-                    action,
-                    trigger,
-                };
-            });
+        const enrichedBlockerEntries: BlockerEntry[] = this.enrichBlockerEntries(
+            blockerEntries,
+            true,
+        );
         return enrichedBlockerEntries;
     };
+
+    // TODO consider checking if rules were updated
+    // TODO consider to download rules only once
+    async hasRulesInStorage() {
+        const data = await storage.get(this.BLOCKER_ENTRIES_STORAGE_KEY);
+        return !!data;
+    }
+
+    async persistRulesInTheStorage() {
+        await storage.set(this.BLOCKER_ENTRIES_STORAGE_KEY, this.blockerEntries);
+        await this.networkEngine.persistLookupTables();
+    }
+
+    async getAndSetRulesFromStorage() {
+        const result = await storage.get(this.BLOCKER_ENTRIES_STORAGE_KEY) as RawBlockerEntry[];
+        this.blockerEntries = this.enrichBlockerEntries(result) as BlockerEntry[];
+        await this.networkEngine.getAndSetRulesFromStorage();
+    }
 
     /**
      * Parses and saves json
@@ -48,16 +90,12 @@ export class ContentBlockerContainer {
         // Parses "content-blocker" json
         this.blockerEntries = this.parseJsonString(json);
 
-        // Parses shortcuts
-        for (let i = 0; i < this.blockerEntries.length; i += 1) {
-            this.blockerEntries[i].trigger.setShortcut(
-                ContentBlockerContainer.parseShortcut(this.blockerEntries[i].trigger.urlFilter),
-            );
-        }
-
         // Init network engine
         this.networkEngine = new NetworkEngine();
         this.networkEngine.addRules(this.blockerEntries);
+
+        // after init save rules in the storage
+        this.persistRulesInTheStorage();
     }
 
     /**
@@ -141,7 +179,6 @@ export class ContentBlockerContainer {
 
         return longest !== '' ? longest.toLowerCase() : undefined;
     }
-
 
     /**
      * Searches for the longest substring of the pattern that

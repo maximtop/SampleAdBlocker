@@ -1,5 +1,7 @@
 import { ContentBlockerContainer } from '../ContentBlockerContainer';
 
+jest.mock('../../../common/log');
+
 describe('ContentBlockerContainer', () => {
     const contentBlockerContainer = new ContentBlockerContainer();
 

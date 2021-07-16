@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { browser } from 'webextension-polyfill-ts';
-import scriptlets from 'scriptlets';
 import ExtendedCss from 'extended-css';
+import scriptlets from 'scriptlets';
 
 import { Messages } from './pages/common/constants';
 
@@ -24,14 +24,25 @@ const logMessage = (verbose: boolean, message: string) => {
     }
 };
 
-const getSelectorsAndScripts = async (): Promise<SelectorsAndScripts> => {
+const getSelectorsAndScripts = async (): Promise<SelectorsAndScripts | null> => {
     const response = await browser.runtime.sendMessage({
         type: Messages.GetRules,
         data: {
             url: window.location.href,
         },
     });
-    return JSON.parse(response) as SelectorsAndScripts;
+
+    if (response == null) {
+        console.log('AG: data not ready yet');
+        return null;
+    }
+
+    try {
+        return JSON.parse(response) as SelectorsAndScripts;
+    } catch (e) {
+        console.log('AG: an error occurred during fetching selectors and scripts from background page', e);
+        return null;
+    }
 };
 
 /**
@@ -234,7 +245,9 @@ const main = async () => {
     if (document instanceof HTMLDocument) {
         if (window.location.href && window.location.href.indexOf('http') === 0) {
             const selectorsAndScripts = await getSelectorsAndScripts();
-            applyAdvancedBlockingData(selectorsAndScripts);
+            if (selectorsAndScripts) {
+                applyAdvancedBlockingData(selectorsAndScripts);
+            }
         }
     }
 };

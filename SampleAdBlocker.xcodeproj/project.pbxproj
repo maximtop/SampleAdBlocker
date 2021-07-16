@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		496E3629267BCABF00BA873D /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 496E3628267BCABF00BA873D /* ContentBlockerConverter */; };
 		496E362F267C8B5100BA873D /* base-filter.txt in Resources */ = {isa = PBXBuildFile; fileRef = 496E362E267C8B5100BA873D /* base-filter.txt */; };
 		497E810D2685D00800D90ED7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A2332674D04200C2788E /* Constants.swift */; };
 		49B2A1ED2674C9D700C2788E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A1EC2674C9D700C2788E /* AppDelegate.swift */; };
@@ -31,6 +30,7 @@
 		49B2A2342674D04200C2788E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A2332674D04200C2788E /* Constants.swift */; };
 		49B2A2352674D16800C2788E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A2332674D04200C2788E /* Constants.swift */; };
 		49B2A23F2674D69200C2788E /* RulesConverterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A23E2674D69200C2788E /* RulesConverterService.swift */; };
+		49C36A7B269F04B400BE3544 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 49C36A7A269F04B400BE3544 /* ContentBlockerConverter */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				496E3629267BCABF00BA873D /* ContentBlockerConverter in Frameworks */,
+				49C36A7B269F04B400BE3544 /* ContentBlockerConverter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +232,7 @@
 			);
 			name = SampleAdBlocker;
 			packageProductDependencies = (
-				496E3628267BCABF00BA873D /* ContentBlockerConverter */,
+				49C36A7A269F04B400BE3544 /* ContentBlockerConverter */,
 			);
 			productName = SampleAdBlocker;
 			productReference = 49B2A1E82674C9D700C2788E /* SampleAdBlocker.app */;
@@ -278,7 +278,7 @@
 		49B2A1E02674C9D700C2788E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					49B2A1E72674C9D700C2788E = {
@@ -302,7 +302,7 @@
 			);
 			mainGroup = 49B2A1DF2674C9D700C2788E;
 			packageReferences = (
-				496E3627267BCABF00BA873D /* XCRemoteSwiftPackageReference "safari-converter" */,
+				49C36A79269F04B400BE3544 /* XCRemoteSwiftPackageReference "safari-converter" */,
 			);
 			productRefGroup = 49B2A1E92674C9D700C2788E /* Products */;
 			projectDirPath = "";
@@ -704,20 +704,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		496E3627267BCABF00BA873D /* XCRemoteSwiftPackageReference "safari-converter" */ = {
+		49C36A79269F04B400BE3544 /* XCRemoteSwiftPackageReference "safari-converter" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "file:///Volumes/dev/safari-converter";
 			requirement = {
-				branch = feature/test;
+				branch = master;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		496E3628267BCABF00BA873D /* ContentBlockerConverter */ = {
+		49C36A7A269F04B400BE3544 /* ContentBlockerConverter */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 496E3627267BCABF00BA873D /* XCRemoteSwiftPackageReference "safari-converter" */;
+			package = 49C36A79269F04B400BE3544 /* XCRemoteSwiftPackageReference "safari-converter" */;
 			productName = ContentBlockerConverter;
 		};
 /* End XCSwiftPackageProductDependency section */

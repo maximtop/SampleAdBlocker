@@ -1,7 +1,7 @@
 {
-  "name": "sample-adblocker",
+  "name": "advanced-adblocker-web-extension",
   "version": "0.0.1",
-  "description": "Sample AdBlocker Extension",
+  "description": "Advanced AdBlocker Web Extension",
   "main": "index.js",
   "author": "AdGuard",
   "license": "MIT",
@@ -26,6 +26,7 @@
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.4",
     "jest": "^27.0.6",
+    "sinon-chrome": "^3.0.1",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4",
     "webpack": "^5.40.0"
