@@ -32,10 +32,12 @@
     "webpack": "^5.40.0"
   },
   "dependencies": {
+    "@adguard/assistant": "^4.3.45",
     "@babel/runtime": "^7.14.6",
     "extended-css": "https://github.com/AdguardTeam/ExtendedCss",
     "scriptlets": "https://github.com/AdguardTeam/Scriptlets",
     "tldts": "^5.7.38",
-    "webextension-polyfill-ts": "^0.25.0"
+    "webextension-polyfill-ts": "^0.25.0",
+    "xstate": "^4.23.0"
   }
 }

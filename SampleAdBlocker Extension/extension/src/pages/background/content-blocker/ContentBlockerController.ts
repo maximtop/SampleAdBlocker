@@ -3,6 +3,7 @@ import { ContentBlockerContainer } from './ContentBlockerContainer';
 import { BlockerData } from './BlockerData';
 import { Messages } from '../../common/constants';
 import { browser } from '../browser';
+import { contentBlockerMachine } from './contentBlockerMachine';
 
 export class ContentBlockerController {
     private contentBlockerContainer: ContentBlockerContainer;
@@ -48,9 +49,17 @@ export class ContentBlockerController {
      * Downloads and sets up json from shared resources
      */
     async init() {
-        if (this.initiated) {
+        if (contentBlockerMachine.isInitiated()) {
             return;
         }
+
+        // Wait until is initiated if init was called again before content blocker was initiated
+        if (contentBlockerMachine.isInitiating()) {
+            await contentBlockerMachine.waitInit();
+            return;
+        }
+
+        contentBlockerMachine.start();
 
         log.debug('AG: AdvancedBlocking: init ContentBlockerController');
 
@@ -58,7 +67,7 @@ export class ContentBlockerController {
         this.blockerDataCache = new Map();
 
         try {
-            // checks if rules are in the storage
+            // Checks if rules are in the storage
             //  - if yes: get and set rules from storage
             //  - if not: get and set rules from native app
             const result = await this.hasRulesInStorage();
@@ -67,9 +76,11 @@ export class ContentBlockerController {
             } else {
                 await this.getAndSetRulesFromNativeApp();
             }
-            this.initiated = true;
+
+            contentBlockerMachine.sendSuccess();
             log.debug('AG: AdvancedBlocking: rules setup went successfully');
         } catch (e) {
+            contentBlockerMachine.sendError();
             log.debug(`AG: AdvancedBlocking: Error setting rules: ${e}`);
         }
     }

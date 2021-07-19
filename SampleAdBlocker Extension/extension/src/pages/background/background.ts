@@ -38,6 +38,7 @@ const handleMessages = () => {
 };
 
 export const background = async () => {
-    // message listener should be on the upper level in order to wake up background page necessary
+    // Message listener should be on the upper level to wake up background page
+    // when it is necessary
     handleMessages();
 };
