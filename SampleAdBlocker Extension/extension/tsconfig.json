@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["ESNext", "DOM"],
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
     "module": "commonjs",
     "allowJs": true,
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": false
+    "forceConsistentCasingInFileNames": false,
+    "jsx": "react",
   }
 }

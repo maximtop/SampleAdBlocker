@@ -3,7 +3,7 @@ import { browser } from 'webextension-polyfill-ts';
 import ExtendedCss from 'extended-css';
 import scriptlets from 'scriptlets';
 
-import { Messages } from './pages/common/constants';
+import { Messages } from '../common/constants';
 
 interface SelectorsAndScripts {
     scripts: string[],
@@ -235,7 +235,7 @@ const applyAdvancedBlockingData = (selectorsAndScripts: SelectorsAndScripts, ver
     logMessage(verbose, 'Applying scripts and css - done');
 };
 
-const main = async () => {
+const init = async () => {
     /**
      * With the following limitation we fix some troubles with Gmail and scrolling
      * on various websites
@@ -252,4 +252,6 @@ const main = async () => {
     }
 };
 
-main();
+export const content = {
+    init,
+};

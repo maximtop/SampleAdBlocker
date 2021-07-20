@@ -1,16 +1,18 @@
 import path from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const BUILD_PATH = path.resolve(__dirname, '../../build');
 
-const BACKGROUND_PATH = path.resolve(__dirname, '../../src/background.ts');
-const CONTENT_PATH = path.resolve(__dirname, '../../src/content.ts');
-const POPUP_PATH = path.resolve(__dirname, '../../src/popup.ts');
+const BACKGROUND_PATH = path.resolve(__dirname, '../../src/targets/background');
+const CONTENT_PATH = path.resolve(__dirname, '../../src/targets/content');
+const POPUP_PATH = path.resolve(__dirname, '../../src/targets/popup');
 
 export const config = {
     mode: 'development',
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     entry: {
         background: BACKGROUND_PATH,
         content: CONTENT_PATH,
@@ -21,12 +23,12 @@ export const config = {
         filename: '[name].js',
     },
     resolve: {
-        extensions: ['.js', '.ts'],
+        extensions: ['.ts', '.tsx', '.js'],
     },
     module: {
         rules: [
             {
-                test: /\.(ts|js)?$/,
+                test: /\.(ts|js)x?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
@@ -38,7 +40,14 @@ export const config = {
         ],
     },
     plugins: [
+        new ForkTsCheckerWebpackPlugin(),
         new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.join(POPUP_PATH, 'index.html'),
+            filename: 'popup.html',
+            chunks: ['popup'],
+            cache: false,
+        }),
         new CopyWebpackPlugin({
             patterns: [
                 {
@@ -55,17 +64,6 @@ export const config = {
                     context: 'src',
                     from: 'manifest.json',
                     to: 'manifest.json',
-                },
-                // TODO update build to generate this files
-                {
-                    context: 'src',
-                    from: 'popup.css',
-                    to: 'popup.css',
-                },
-                {
-                    context: 'src',
-                    from: 'popup.html',
-                    to: 'popup.html',
                 },
             ],
         }),
