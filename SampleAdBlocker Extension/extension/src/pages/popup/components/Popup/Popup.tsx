@@ -1,16 +1,17 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */
 import React from 'react';
 
+import './popup.pcss';
+
 export const Popup = () => {
-    const handleBlock = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleBlock = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         console.log('launch assistant');
     };
 
     return (
-        <div>
+        <div className="popup">
             <div>Popup</div>
-            <div role="button" onClick={handleBlock}>Block ads on this website</div>
+            <a href="#" onClick={handleBlock}>Block ads on this website</a>
         </div>
     );
 };
