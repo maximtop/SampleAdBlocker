@@ -5,7 +5,6 @@ import './popup.pcss';
 export const Popup = () => {
     const handleBlock = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
-        console.log('launch assistant');
     };
 
     return (
