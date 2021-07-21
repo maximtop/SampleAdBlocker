@@ -1,10 +1,25 @@
 import React from 'react';
 
+import { browser } from '../../../background/browser';
+import { MessagesToBackgroundPage } from '../../../common/constants';
+
 import './popup.pcss';
 
 export const Popup = () => {
-    const handleBlock = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleBlock = async (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
+
+        const [currentTab] = await browser.tabs.query({
+            active: true,
+            currentWindow: true,
+        });
+
+        await browser.runtime.sendMessage({
+            type: MessagesToBackgroundPage.OpenAssistant,
+            data: { tabId: currentTab.id },
+        });
+
+        window.close();
     };
 
     return (

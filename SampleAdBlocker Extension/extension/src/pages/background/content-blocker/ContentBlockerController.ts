@@ -1,7 +1,7 @@
 import { log } from '../../common/log';
 import { ContentBlockerContainer } from './ContentBlockerContainer';
 import { BlockerData } from './BlockerData';
-import { Messages } from '../../common/constants';
+import { MessagesToNativeApp } from '../../common/constants';
 import { browser } from '../browser';
 import { contentBlockerMachine } from './contentBlockerMachine';
 
@@ -25,7 +25,7 @@ export class ContentBlockerController {
         const response = await browser.runtime.sendNativeMessage(
             'application-id',
             {
-                type: Messages.GetRules,
+                type: MessagesToNativeApp.GetJsonRules,
             },
         );
         this.contentBlockerContainer.setJson(response.data);

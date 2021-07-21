@@ -8,6 +8,7 @@ const BUILD_PATH = path.resolve(__dirname, '../../build');
 
 const BACKGROUND_PATH = path.resolve(__dirname, '../../src/targets/background');
 const CONTENT_PATH = path.resolve(__dirname, '../../src/targets/content');
+const ASSISTANT_PATH = path.resolve(__dirname, '../../src/targets/assistant');
 const POPUP_PATH = path.resolve(__dirname, '../../src/targets/popup');
 
 export const config = {
@@ -15,6 +16,7 @@ export const config = {
     devtool: 'source-map',
     entry: {
         background: BACKGROUND_PATH,
+        assistant: ASSISTANT_PATH,
         content: CONTENT_PATH,
         popup: POPUP_PATH,
     },

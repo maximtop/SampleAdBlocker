@@ -3,7 +3,7 @@ import { browser } from 'webextension-polyfill-ts';
 import ExtendedCss from 'extended-css';
 import scriptlets from 'scriptlets';
 
-import { Messages } from '../common/constants';
+import { MessagesToBackgroundPage } from '../common/constants';
 
 interface SelectorsAndScripts {
     scripts: string[],
@@ -26,7 +26,7 @@ const logMessage = (verbose: boolean, message: string) => {
 
 const getSelectorsAndScripts = async (): Promise<SelectorsAndScripts | null> => {
     const response = await browser.runtime.sendMessage({
-        type: Messages.GetRules,
+        type: MessagesToBackgroundPage.GetScriptsAndSelectors,
         data: {
             url: window.location.href,
         },

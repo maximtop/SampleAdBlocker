@@ -11,7 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@adguard/assistant": "^4.3.45",
+    "@adguard/assistant": "^4.3.48",
     "@babel/runtime": "^7.14.6",
     "extended-css": "https://github.com/AdguardTeam/ExtendedCss",
     "react": "^17.0.2",

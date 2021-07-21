@@ -1,11 +1,11 @@
 import { browser } from '../background/browser';
-import { Messages } from './constants';
+import { MessagesToNativeApp } from './constants';
 
 export const logNative = async (message: string) => {
     await browser.runtime.sendNativeMessage(
         'application-id',
         {
-            type: Messages.WriteInNativeLog,
+            type: MessagesToNativeApp.WriteInNativeLog,
             data: message,
         },
     );
