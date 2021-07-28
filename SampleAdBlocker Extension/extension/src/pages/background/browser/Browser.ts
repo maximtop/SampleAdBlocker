@@ -7,6 +7,6 @@ export class Browser {
     };
 
     tabs = {
-        query: browser.tabs.query,
+        query: browser.tabs?.query,
     };
 }

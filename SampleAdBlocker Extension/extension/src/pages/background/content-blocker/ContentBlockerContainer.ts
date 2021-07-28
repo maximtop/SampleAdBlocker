@@ -9,6 +9,7 @@ import { Action, ActionRaw } from './Action';
 import { Trigger, RawTrigger } from './Trigger';
 import { storage } from '../storage';
 import { NativeTrigger, RawNativeTrigger } from './NativeTrigger';
+import { logNative } from '../../common/logNative';
 
 type RawBlockerEntry = { action: ActionRaw, trigger: RawTrigger };
 
@@ -21,6 +22,8 @@ export class ContentBlockerContainer {
     private networkEngine: NetworkEngine;
 
     private BLOCKER_ENTRIES_STORAGE_KEY = 'blocker_entries';
+
+    private BLOCKER_ENTRIES_EXIST_STORAGE_KEY = 'blocker_entries_exists';
 
     constructor() {
         this.blockerEntries = [];
@@ -66,19 +69,28 @@ export class ContentBlockerContainer {
     // TODO consider checking if rules were updated
     // TODO consider to download rules only once
     async hasRulesInStorage() {
-        const data = await storage.get(this.BLOCKER_ENTRIES_STORAGE_KEY);
+        const data = await storage.get(this.BLOCKER_ENTRIES_EXIST_STORAGE_KEY);
         return !!data;
     }
 
     async persistRulesInTheStorage() {
-        await storage.set(this.BLOCKER_ENTRIES_STORAGE_KEY, this.blockerEntries);
-        await this.networkEngine.persistLookupTables();
+        await Promise.all([
+            storage.set(this.BLOCKER_ENTRIES_STORAGE_KEY, this.blockerEntries),
+            storage.set(this.BLOCKER_ENTRIES_EXIST_STORAGE_KEY, true),
+            this.networkEngine.persistLookupTables(),
+        ]);
     }
 
     async getAndSetRulesFromStorage() {
+        let start = Date.now();
         const result = await storage.get(this.BLOCKER_ENTRIES_STORAGE_KEY) as RawBlockerEntry[];
+        logNative(`Time to load blocker entries from storage: ${Date.now() - start}`);
+        start = Date.now();
         this.blockerEntries = this.enrichBlockerEntries(result) as BlockerEntry[];
-        await this.networkEngine.getAndSetRulesFromStorage();
+        logNative(`Time to enrich blocker entries: ${Date.now() - start}`);
+        start = Date.now();
+        await this.networkEngine.getAndSetLookupTablesFromStorage();
+        logNative(`Time to get and set lookup tables from storage: ${Date.now() - start}`);
     }
 
     /**

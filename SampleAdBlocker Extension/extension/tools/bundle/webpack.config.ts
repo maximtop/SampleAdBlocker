@@ -13,7 +13,7 @@ const POPUP_PATH = path.resolve(__dirname, '../../src/targets/popup');
 
 export const config = {
     mode: 'development',
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
     entry: {
         background: BACKGROUND_PATH,
         assistant: ASSISTANT_PATH,

@@ -1,6 +1,8 @@
 import { adguardAssistant, Assistant } from '@adguard/assistant';
 import { browser } from 'webextension-polyfill-ts';
+
 import { MessagesToContentScript } from '../../common/constants';
+import { log } from '../../common/log';
 
 declare global {
     namespace NodeJS {
@@ -11,7 +13,6 @@ declare global {
 }
 
 export const initAssistant = () => {
-    console.log('assistantStarted', global.assistantStarted);
     if (global.assistantStarted) {
         return;
     }
@@ -50,15 +51,13 @@ export const initAssistant = () => {
                 }
 
                 assistant.start(selectedElement, async (rules) => {
-                    console.log('send rules', rules);
                     try {
                         await browser.runtime.sendMessage({
                             type: addRuleCallbackName,
                             data: { ruleText: rules },
                         });
                     } catch (e) {
-                        // TODO add logger
-                        console.log(e);
+                        log.error(e);
                     }
                 });
                 break;

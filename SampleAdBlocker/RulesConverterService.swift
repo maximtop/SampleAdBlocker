@@ -6,16 +6,22 @@ class RulesConverterService {
      * Reads rules from test filter
      */
     static func getRules() -> [String]? {
-        let filePath = Bundle.main.url(forResource: "base-filter", withExtension: "txt")
-        do {
-            let rules = try String(contentsOf: filePath!, encoding: .utf8)
-            let result = rules.components(separatedBy: "\n")
-            NSLog("\(result)")
-            return result
-        } catch {
-            NSLog("Error reading test filter")
+        var result: [String] = []
+        // FIXME set 17
+        for index in 1...17 {
+            let filePath = Bundle.main.url(forResource: "filter_\(index)", withExtension: "txt")
+            do {
+                NSLog("--------------------------------------")
+                NSLog("Filter \(String(describing: filePath))")
+                let rulesText = try String(contentsOf: filePath!, encoding: .utf8)
+                let rules = rulesText.components(separatedBy: "\n")
+                result += rules
+            } catch {
+                NSLog("Error: \(error)")
+                return nil;
+            }
         }
-        return nil
+        return result;
     }
 
     /**
@@ -23,8 +29,8 @@ class RulesConverterService {
      */
     static func convertRules(rules: [String]) -> ConversionResult {
         let result: ConversionResult? = ContentBlockerConverter().convertArray(rules: rules, advancedBlocking: true)
-        NSLog("Converted: \(result!.converted)")
-        NSLog("Advanced Blocking: \(result!.advancedBlocking ?? "Empty")")
+//        NSLog("Converted: \(result!.converted)")
+//        NSLog("Advanced Blocking: \(result!.advancedBlocking ?? "Empty")")
         return result!
     }
 
@@ -51,11 +57,11 @@ class RulesConverterService {
         let rules = convertRules(rules: rulesList)
         
         let rulesData = rules.converted.data(using: .utf8)
-        saveConversionResult(rules: rulesData!, fileName: Constants.simpleRulesBlockerFilename)
+        saveConversionResult(rules: rulesData!, fileName: Config.simpleRulesBlockerFilename)
 
         if let advancedBlocking = rules.advancedBlocking {
             let advancedData = advancedBlocking.data(using: .utf8)
-            saveConversionResult(rules: advancedData!, fileName: Constants.advancedRulesBlockerFilename)
+            saveConversionResult(rules: advancedData!, fileName: Config.advancedRulesBlockerFilename)
         }
     }
 }

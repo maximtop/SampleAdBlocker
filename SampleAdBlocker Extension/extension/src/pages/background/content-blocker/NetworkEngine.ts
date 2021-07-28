@@ -8,6 +8,7 @@ import { parse } from 'tldts';
 import { BlockerEntry } from './BlockerEntry';
 import { storage } from '../storage';
 import { lookupTableToObject, Objects, objectToLookupTable } from '../serializer';
+import { logNative } from '../../common/logNative';
 
 export class NetworkEngine {
     private shortcutLength = 5;
@@ -309,9 +310,11 @@ export class NetworkEngine {
     /**
      * Retrieves lookup tables from the storage
      */
-    async getAndSetRulesFromStorage() {
+    async getAndSetLookupTablesFromStorage() {
+        let start = Date.now();
         const result = await storage
             .get(this.LOOKUP_TABLES_STORAGE_KEY) as { [key: string]: Objects };
+        logNative(`Time to get lookup tables from storage: ${Date.now() - start}`);
         const {
             domainsLookupTable,
             shortcutsLookupTable,
@@ -319,11 +322,13 @@ export class NetworkEngine {
             otherRules,
         } = result;
 
+        start = Date.now();
         this.domainsLookupTable = objectToLookupTable(domainsLookupTable) as Map<number, number[]>;
         // eslint-disable-next-line max-len
         this.shortcutsLookupTable = objectToLookupTable(shortcutsLookupTable) as Map<number, number[]>;
         this.shortcutsHistogram = objectToLookupTable(shortcutsHistogram) as Map<number, number>;
         this.otherRules = otherRules as number[];
+        logNative(`Time to set lookup tables: ${Date.now() - start}`);
     }
 
     /**

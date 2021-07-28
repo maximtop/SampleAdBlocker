@@ -23,7 +23,8 @@
 
     "content_scripts": [{
         "js": [ "content.js" ],
-        "matches": [ "http://example.org/*" ]
+        "matches": [ "<all_urls>" ],
+        "run_at": "document_start"
     }],
 
     "browser_action": {
@@ -37,7 +38,7 @@
     },
 
     "permissions": [
-        "http://example.org/*",
+        "<all_urls>",
         "nativeMessaging",
         "storage",
         "unlimitedStorage"

@@ -1,7 +1,7 @@
 import { log } from '../../common/log';
 import { ContentBlockerContainer } from './ContentBlockerContainer';
 import { BlockerData } from './BlockerData';
-import { MessagesToNativeApp } from '../../common/constants';
+import { MessagesToBackgroundPage, MessagesToNativeApp } from '../../common/constants';
 import { browser } from '../browser';
 import { contentBlockerMachine } from './contentBlockerMachine';
 
@@ -22,13 +22,30 @@ export class ContentBlockerController {
      * @private
      */
     private async getAndSetRulesFromNativeApp() {
-        const response = await browser.runtime.sendNativeMessage(
-            'application-id',
-            {
-                type: MessagesToNativeApp.GetJsonRules,
-            },
-        );
-        this.contentBlockerContainer.setJson(response.data);
+        // Get from native from background page
+        if (browser.runtime.sendNativeMessage) {
+            console.log('send message to native app');
+            const response = await browser.runtime.sendNativeMessage(
+                'application-id',
+                {
+                    type: MessagesToNativeApp.GetJsonRules,
+                    data: 'blabla', // FIXME fix types, to make this optional
+                },
+            );
+            this.contentBlockerContainer.setJson(response.data);
+            return;
+        }
+
+        console.log('send message to background page');
+        // Get from native through background page
+        try {
+            const response = await browser.runtime.sendMessage(
+                { type: MessagesToBackgroundPage.GetAdvancedJson },
+            );
+            this.contentBlockerContainer.setJson(response.data);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     /**
@@ -70,7 +87,8 @@ export class ContentBlockerController {
             // Checks if rules are in the storage
             //  - if yes: get and set rules from storage
             //  - if not: get and set rules from native app
-            const result = await this.hasRulesInStorage();
+            const result = await this.hasRulesInStorage(); // FIXME revert
+            // const result = false;
             if (result) {
                 await this.getAndSetRulesFromStorage();
             } else {

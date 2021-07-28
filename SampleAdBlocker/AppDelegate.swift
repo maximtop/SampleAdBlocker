@@ -5,6 +5,7 @@ import SafariServices
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+//        UserFilterStorage.getRules()
         RulesConverterService.applyConverter();
 
         // reload SampleAdBlocker extension

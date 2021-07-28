@@ -32,15 +32,15 @@ const getSelectorsAndScripts = async (): Promise<SelectorsAndScripts | null> => 
         },
     });
 
-    if (response == null) {
-        console.log('AG: data not ready yet');
+    if (response === null) {
+        console.log('AG: no scripts and selectors received');
         return null;
     }
 
     try {
         return JSON.parse(response) as SelectorsAndScripts;
     } catch (e) {
-        console.log('AG: an error occurred during fetching selectors and scripts from background page', e);
+        console.log('AG: error occurred on selectors and script json parse', e);
         return null;
     }
 };
@@ -236,17 +236,18 @@ const applyAdvancedBlockingData = (selectorsAndScripts: SelectorsAndScripts, ver
 };
 
 const init = async () => {
-    /**
-     * With the following limitation we fix some troubles with Gmail and scrolling
-     * on various websites
-     * https://github.com/AdguardTeam/AdGuardForSafari/issues/433
-     * https://github.com/AdguardTeam/AdGuardForSafari/issues/441
-     */
     if (document instanceof HTMLDocument) {
         if (window.location.href && window.location.href.indexOf('http') === 0) {
-            const selectorsAndScripts = await getSelectorsAndScripts();
+            const startGettingScripts = Date.now();
+            let selectorsAndScripts;
+            try {
+                selectorsAndScripts = await getSelectorsAndScripts();
+            } catch (e) {
+                console.log(e);
+            }
+            console.log(`Time to get selectors and scripts from native page to content script: ${Date.now() - startGettingScripts} ms`);
             if (selectorsAndScripts) {
-                applyAdvancedBlockingData(selectorsAndScripts);
+                applyAdvancedBlockingData(selectorsAndScripts, false);
             }
         }
     }
