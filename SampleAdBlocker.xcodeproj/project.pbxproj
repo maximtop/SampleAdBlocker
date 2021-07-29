@@ -40,6 +40,8 @@
 		496F4A4126AF066000AE5754 /* BlockerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496F4A3C26AF065F00AE5754 /* BlockerData.swift */; };
 		496F4A4226AF066000AE5754 /* ContentBlockerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496F4A3D26AF066000AE5754 /* ContentBlockerContainer.swift */; };
 		497E810D2685D00800D90ED7 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A2332674D04200C2788E /* Config.swift */; };
+		4982DE3426B2C8D4002CE7F2 /* AdvancedContentBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982DE3326B2C8D4002CE7F2 /* AdvancedContentBlocker.swift */; };
+		4982DE3626B2D2F4002CE7F2 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 4982DE3526B2D2F4002CE7F2 /* ContentBlockerConverter */; };
 		49B2A1ED2674C9D700C2788E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A1EC2674C9D700C2788E /* AppDelegate.swift */; };
 		49B2A1F02674C9D800C2788E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B2A1EE2674C9D800C2788E /* Main.storyboard */; };
 		49B2A1F22674C9D800C2788E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2A1F12674C9D800C2788E /* ViewController.swift */; };
@@ -121,6 +123,7 @@
 		496F4A3B26AF065F00AE5754 /* NetworkEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEngine.swift; sourceTree = "<group>"; };
 		496F4A3C26AF065F00AE5754 /* BlockerData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerData.swift; sourceTree = "<group>"; };
 		496F4A3D26AF066000AE5754 /* ContentBlockerContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerContainer.swift; sourceTree = "<group>"; };
+		4982DE3326B2C8D4002CE7F2 /* AdvancedContentBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedContentBlocker.swift; sourceTree = "<group>"; };
 		49B2A1E82674C9D700C2788E /* SampleAdBlocker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleAdBlocker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B2A1EB2674C9D700C2788E /* SampleAdBlocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleAdBlocker.entitlements; sourceTree = "<group>"; };
 		49B2A1EC2674C9D700C2788E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4982DE3626B2D2F4002CE7F2 /* ContentBlockerConverter in Frameworks */,
 				49B2A2002674C9DB00C2788E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				49B2A2022674C9DB00C2788E /* SafariWebExtensionHandler.swift */,
+				4982DE3326B2C8D4002CE7F2 /* AdvancedContentBlocker.swift */,
 				496F4A3C26AF065F00AE5754 /* BlockerData.swift */,
 				496F4A3926AF065F00AE5754 /* BlockerEntry.swift */,
 				496F4A3D26AF066000AE5754 /* ContentBlockerContainer.swift */,
@@ -328,6 +333,9 @@
 			dependencies = (
 			);
 			name = "SampleAdBlocker Extension";
+			packageProductDependencies = (
+				4982DE3526B2D2F4002CE7F2 /* ContentBlockerConverter */,
+			);
 			productName = "SampleAdBlocker Extension";
 			productReference = 49B2A1FA2674C9DB00C2788E /* SampleAdBlocker Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -465,6 +473,7 @@
 				496F4A4026AF066000AE5754 /* NetworkEngine.swift in Sources */,
 				496F4A4226AF066000AE5754 /* ContentBlockerContainer.swift in Sources */,
 				496F4A3E26AF066000AE5754 /* BlockerEntry.swift in Sources */,
+				4982DE3426B2C8D4002CE7F2 /* AdvancedContentBlocker.swift in Sources */,
 				496F4A3F26AF066000AE5754 /* ContentBlockerController.swift in Sources */,
 				496F4A4126AF066000AE5754 /* BlockerData.swift in Sources */,
 				497E810D2685D00800D90ED7 /* Config.swift in Sources */,
@@ -808,13 +817,18 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "file:///Volumes/dev/safari-converter";
 			requirement = {
-				branch = master;
+				branch = "feature/AG-9346";
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4982DE3526B2D2F4002CE7F2 /* ContentBlockerConverter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49C36A79269F04B400BE3544 /* XCRemoteSwiftPackageReference "safari-converter" */;
+			productName = ContentBlockerConverter;
+		};
 		49C36A7A269F04B400BE3544 /* ContentBlockerConverter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49C36A79269F04B400BE3544 /* XCRemoteSwiftPackageReference "safari-converter" */;

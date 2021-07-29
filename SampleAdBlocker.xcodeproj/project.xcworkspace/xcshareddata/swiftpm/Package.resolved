@@ -14,8 +14,8 @@
         "package": "ContentBlockerConverter",
         "repositoryURL": "/Volumes/dev/safari-converter",
         "state": {
-          "branch": "master",
-          "revision": "995617fb439112ff4c95249e78b1cfea7268996d",
+          "branch": "feature/AG-9346",
+          "revision": "a5318765d5740953145dd0fa31b31953d679d196",
           "version": null
         }
       }

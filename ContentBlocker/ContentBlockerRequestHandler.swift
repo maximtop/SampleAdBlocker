@@ -7,7 +7,7 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
 
         let jsonURL = documentFolder!.appendingPathComponent(Config.simpleRulesBlockerFilename)
 
-        NSLog("CONTENT BLOCKER path \(jsonURL.path)")
+        NSLog("AG: ContentBlocker path \(jsonURL.path)")
 
         let attachment = NSItemProvider(contentsOf: jsonURL)!
 

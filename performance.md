@@ -1,4 +1,4 @@
-# Time to deliver selectors and scripts to content script
+# Time to deliver selectors and scripts to content script (tested on Safari)
 
 Because we are forced to use a non-persistent background page, we had to decide where we should keep the content blocker service. There are several possible ways:
 

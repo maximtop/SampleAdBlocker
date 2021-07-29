@@ -15,13 +15,12 @@ struct ExtensionMessage {
 }
 
 class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
-    private var contentBlockerController: ContentBlockerController? = nil;
+    private var advancedContentBlocker: AdvancedContentBlocker? = nil;
 
     // This method will be called when a background page calls browser.runtime.sendNativeMessage
     func beginRequest(with context: NSExtensionContext) {
-        if (self.contentBlockerController == nil) {
-            NSLog("Set new content blocker controller")
-            self.contentBlockerController = ContentBlockerController.shared;
+        if (advancedContentBlocker == nil) {
+            advancedContentBlocker = AdvancedContentBlocker.shared;
         }
 
         let item = context.inputItems[0] as! NSExtensionItem
@@ -54,8 +53,6 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             break;
         case "get_blocking_data":
             let pageUrl = URL(string: message.data);
-            // FIXME remove
-            NSLog("Page url: \(String(describing: pageUrl))");
 
             if pageUrl == nil {
                 context.completeRequest(returningItems: nil, completionHandler: nil)
@@ -63,16 +60,14 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             }
 
             do {
-                NSLog("Start get blocking data")
-                let blockingData = try self.contentBlockerController!.getData(url: pageUrl!);
-                NSLog("End get blocking data")
-                NSLog(blockingData)
+                let blockingData = try advancedContentBlocker!.getBlockingData(url: pageUrl!);
+
+                // prepare response
                 let response = NSExtensionItem()
                 response.userInfo = [SFExtensionMessageKey: ["data": blockingData]]
                 context.completeRequest(returningItems: [response], completionHandler: nil)
             } catch {
-                NSLog("Error getting blocking data")
-                NSLog("AG: An error ocurred: \(error)")
+                NSLog("AG: An error occured on getting blocking data: \(error)")
             }
             break;
         case "write_in_native_log":
@@ -84,8 +79,6 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         default:
             break;
         }
-
-//        context.completeRequest(returningItems: nil, completionHandler: nil)
     }
 
 }
