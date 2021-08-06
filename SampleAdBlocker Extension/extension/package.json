@@ -4,11 +4,12 @@
   "description": "Advanced AdBlocker Web Extension",
   "main": "index.js",
   "author": "AdGuard",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "scripts": {
     "build": "ts-node tools/bundle",
     "lint": "eslint . --ext .js,.ts",
-    "test": "jest"
+    "test": "jest",
+    "watch": "yarn build --watch"
   },
   "dependencies": {
     "@adguard/assistant": "^4.3.48",

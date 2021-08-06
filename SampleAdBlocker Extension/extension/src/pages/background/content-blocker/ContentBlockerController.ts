@@ -1,8 +1,9 @@
+import { browser } from 'webextension-polyfill-ts';
+
 import { log } from '../../common/log';
 import { ContentBlockerContainer } from './ContentBlockerContainer';
 import { BlockerData } from './BlockerData';
 import { MessagesToBackgroundPage, MessagesToNativeApp } from '../../common/constants';
-import { browser } from '../browser';
 import { contentBlockerMachine } from './contentBlockerMachine';
 
 export class ContentBlockerController {

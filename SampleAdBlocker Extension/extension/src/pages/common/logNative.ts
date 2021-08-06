@@ -1,4 +1,5 @@
-import { browser } from '../background/browser';
+import { browser } from 'webextension-polyfill-ts';
+
 import { MessagesToNativeApp } from './constants';
 
 export const logNative = (message: string) => {

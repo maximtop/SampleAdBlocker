@@ -1,6 +1,6 @@
 import React from 'react';
+import { browser } from 'webextension-polyfill-ts'
 
-import { browser } from '../../../background/browser';
 import { MessagesToBackgroundPage } from '../../../common/constants';
 
 import './popup.pcss';

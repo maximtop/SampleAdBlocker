@@ -33,7 +33,6 @@ const handleScriptsAndSelectorsGeneration = async (url: string) => {
 
 const handleMessages = () => {
     browser.runtime.onMessage.addListener(async (message: Message) => {
-        console.log(message);
         // @ts-ignore
         const { type, data } = message;
 

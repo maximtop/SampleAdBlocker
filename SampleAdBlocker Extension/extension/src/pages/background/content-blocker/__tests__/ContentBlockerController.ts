@@ -1,6 +1,7 @@
+import { browser } from 'webextension-polyfill-ts';
+
 import { ContentBlockerController } from '../ContentBlockerController';
 import { storage } from '../../storage';
-import { browser } from '../../browser';
 
 // silence log messages
 jest.mock('../../../common/log');
