@@ -4,32 +4,11 @@ import { browser } from 'webextension-polyfill-ts';
 import { MessagesToBackgroundPage, MessagesToContentScript, MessagesToNativeApp } from '../common/constants';
 import { logNative } from '../common/logNative';
 import { log } from '../common/log';
-// TODO remove content blocker if find that native app works faster
-import { contentBlocker } from './content-blocker/contentBlocker';
 
 interface Message {
     type: string,
     data: any,
 }
-
-const handleScriptsAndSelectorsGeneration = async (url: string) => {
-    // If message is get rules we should initiate content blocker first
-    try {
-        const start = Date.now();
-        await contentBlocker.init();
-        logNative(`Time to init: ${Date.now() - start}`);
-    } catch (e) {
-        const errorMessage = `AG: An error occurred on content blocker init ${e}`;
-        logNative(errorMessage);
-        log.error(errorMessage);
-        return null;
-    }
-
-    const start = Date.now();
-    const data = await contentBlocker.getData(url);
-    logNative(`Time to get data from blocker for url: ${url}: ${Date.now() - start}`);
-    return data;
-};
 
 const handleMessages = () => {
     browser.runtime.onMessage.addListener(async (message: Message) => {
