@@ -13,7 +13,7 @@
     "popup_action_safari_protection_description": {
         "message": "for this website"
     },
-    "popup_action_current_site_status_description_enabled": {
+    "popup_action_current_site_status_desc_enabled": {
         "message": "protection enabled"
     },
     "popup_action_block_element": {
@@ -21,5 +21,14 @@
     },
     "popup_action_delete_user_rules": {
         "message": "Delete all user rules for this site"
+    },
+    "popup_action_current_site_desc_starting": {
+        "message": "please wait, starting protection..."
+    },
+    "popup_action_current_site_desc_allowlisted": {
+        "message":  "website is allowlisted"
+    },
+    "popup_action_current_site_desc_basic_only":  {
+        "message":  "basic protection only"
     }
 }

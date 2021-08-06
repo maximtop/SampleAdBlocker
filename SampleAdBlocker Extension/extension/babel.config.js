@@ -7,6 +7,10 @@ module.exports = (api) => {
             '@babel/react',
             '@babel/preset-typescript',
         ],
-        plugins: ['@babel/plugin-transform-runtime'],
+        plugins: [
+            ['@babel/plugin-proposal-decorators', { legacy: true }],
+            ['@babel/plugin-proposal-class-properties', { loose: true }],
+            '@babel/plugin-transform-runtime',
+        ],
     };
 };

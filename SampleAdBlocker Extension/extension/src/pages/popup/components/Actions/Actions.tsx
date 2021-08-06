@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react';
 import { browser } from 'webextension-polyfill-ts';
 
 import { Action } from './Action';
 import { translator } from '../../../common/translators/translator';
 import { MessagesToBackgroundPage } from '../../../common/constants';
+import { popupStore } from '../../stores/PopupStore';
 
 /**
  * TODO
@@ -32,21 +34,16 @@ const handleBlock = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     window.close();
 };
 
-export const Actions = () => {
-    const currentSiteDomain = 'google.com';
-    // TODO add next statuses
-    //  - "please wait, starting protection..."
-    //  - "website is allowlisted"
-    //  - "basic protection only"
-    const currentSiteStatus = translator.getMessage('popup_action_current_site_status_description_enabled');
+export const Actions = observer(() => {
+    const store = useContext(popupStore);
     const hasUserRules = true;
 
     return (
         <>
             <Action
                 icon="G"
-                title={currentSiteDomain}
-                description={currentSiteStatus}
+                title={store.currentSiteDomain}
+                description={store.currentSiteStatusMessage}
             />
             <Action
                 icon="S"
@@ -65,4 +62,4 @@ export const Actions = () => {
             )}
         </>
     );
-};
+});

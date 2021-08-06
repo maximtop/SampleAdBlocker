@@ -41,6 +41,7 @@
         "<all_urls>",
         "nativeMessaging",
         "storage",
-        "unlimitedStorage"
+        "unlimitedStorage",
+        "activeTab"
     ]
 }
