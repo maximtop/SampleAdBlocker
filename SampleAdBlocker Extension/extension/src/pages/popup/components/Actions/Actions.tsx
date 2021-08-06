@@ -18,7 +18,7 @@ import { popupStore } from '../../stores/PopupStore';
  */
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const handleBlock = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+const handleBlock = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
 
     const [currentTab] = await browser.tabs.query({
@@ -53,6 +53,7 @@ export const Actions = observer(() => {
             <Action
                 icon="B"
                 title={translator.getMessage('popup_action_block_element')}
+                onClick={handleBlock}
             />
             {hasUserRules && (
                 <Action
