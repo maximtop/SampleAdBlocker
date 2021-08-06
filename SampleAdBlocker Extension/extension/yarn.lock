@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@adguard/assistant/-/assistant-4.3.48.tgz#c4f0d4f53608921eb0f29c992f9c22aaefb097aa"
   integrity sha512-TbvDPKlUERU4/d9iAr10mTK4+lgwEimne4j1jDJnuKdqwY/In7BlTXvsqp1495p2tFcRGQct2DFNh7SgUdi6NQ==
 
+"@adguard/translate@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@adguard/translate/-/translate-0.2.3.tgz#f30ef9000a3073ea0c24860cd0bf685b16de063b"
+  integrity sha512-I0XcTSKrrRryD1PGd8kPKHB5SIY45+gTEAMqhpo2lDyUNMkW9MdhrNeAuoejJ+BuqU2TT+jK7KCNe33r7IsSjw==
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
