@@ -41,23 +41,23 @@ export const Actions = observer(() => {
     return (
         <>
             <Action
-                icon="G"
+                icon="compass"
                 title={store.currentSiteDomain}
                 description={store.currentSiteStatusMessage}
             />
             <Action
-                icon="S"
+                icon="compass"
                 title={translator.getMessage('popup_action_safari_protection_title')}
                 description={translator.getMessage('popup_action_safari_protection_description')}
             />
             <Action
-                icon="B"
+                icon="aim"
                 title={translator.getMessage('popup_action_block_element')}
                 onClick={handleBlock}
             />
             {hasUserRules && (
                 <Action
-                    icon="D"
+                    icon="delete"
                     title={translator.getMessage('popup_action_delete_user_rules')}
                 />
             )}

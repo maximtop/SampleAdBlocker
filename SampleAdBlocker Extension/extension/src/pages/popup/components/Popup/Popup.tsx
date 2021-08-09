@@ -3,7 +3,9 @@ import { observer } from 'mobx-react';
 
 import { Actions } from '../Actions';
 import { popupStore } from '../../stores/PopupStore';
+import Icons from '../../../../lib/Icons';
 
+import '../../../../vars.pcss';
 import './popup.pcss';
 
 /**
@@ -19,6 +21,7 @@ export const Popup = observer(() => {
 
     return (
         <div className="popup">
+            <Icons />
             <Actions />
         </div>
     );

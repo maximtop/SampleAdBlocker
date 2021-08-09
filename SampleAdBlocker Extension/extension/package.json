@@ -15,6 +15,7 @@
     "@adguard/assistant": "^4.3.48",
     "@adguard/translate": "^0.2.3",
     "@babel/runtime": "^7.14.6",
+    "classnames": "^2.3.1",
     "extended-css": "https://github.com/AdguardTeam/ExtendedCss",
     "mobx": "^6.3.2",
     "mobx-react": "^7.2.0",
